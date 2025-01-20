@@ -9,6 +9,7 @@ private:
     T* Data;
 public:
     struct iterator{
+        
         T* ptr;
         iterator(T* PTR):ptr(PTR){};
         T& operator*(){
