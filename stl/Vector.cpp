@@ -10,6 +10,7 @@ private:
 public:
     struct iterator{
         
+        
         T* ptr;
         iterator(T* PTR):ptr(PTR){};
         T& operator*(){
