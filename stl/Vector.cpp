@@ -9,9 +9,7 @@ private:
     size_t Size,Able;
     T* Data;
 public:
-    struct iterator{
-        
-        
+    struct iterator{    //Have Problem with this iterator
         T* ptr;
         iterator(T* PTR):ptr(PTR){};
         T& operator*(){
