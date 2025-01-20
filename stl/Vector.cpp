@@ -1,4 +1,3 @@
-//你好
 #include<iostream>
 #include<algorithm>
 #include<cassert>
