@@ -7,10 +7,12 @@ private:
     size_t Size,Able;
     T* Data;
 public:
+    bool Out_Assert;
     Vector(){
         Size=0;
         Able=1;
         Data=new T[1];
+        Out_Assert=true;
     }
     void push_back(T value){
         if(Size==Able){
@@ -32,7 +34,10 @@ public:
         return Size;
     }
     T operator[](const size_t &index){
-        if(index>=Size) assert(false);
+        if(index>=Size){
+            if(Out_Assert)assert(0);
+            else return 0;
+        }
         return Data[index];
     }
     T at(const size_t &index){
@@ -41,6 +46,3 @@ public:
     }
 };
 Vector<int> v;
-int main(){
-
-}
