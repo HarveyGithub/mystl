@@ -11,6 +11,11 @@ private:
 public:
     struct iterator{
         T* ptr;
+<<<<<<< HEAD:Header/vector.h
+        iterator(T* PTR):ptr(PTR){};
+        T& operator*(){
+            return *ptr;;
+=======
         using value_type=T;
         using difference_type=ptrdiff_t;
         using reference=T&;
@@ -19,6 +24,7 @@ public:
         iterator(T* PTR):ptr(PTR){}
         reference operator*(){
             return*ptr;
+>>>>>>> 7baf4bdb7c94ae23a95fc8961be6d4bfcd4fceb7:Header/vector.hpp
         }
         iterator& operator++(){
             ++ptr;
