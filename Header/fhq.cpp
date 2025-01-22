@@ -4,8 +4,13 @@
 #endif
 using namespace std;
 template<typename T>
+struct Less{bool operator()(const T &x,const T &y){return x<y;}};
+template<typename T>
+struct Greater{bool operator()(const T &x,const T &y){return x>y;}};
+template<typename T,typename Compare=Less<T>>
 class FHQ_Treap{
 public:
+    Compare cmp;
     struct Node{
         int pri;
         T key;
@@ -43,7 +48,7 @@ public:
             left=right=nil;
             return;
         }
-        if(node->key<=key){
+        if(!cmp(key,node->key)){
             left=node;
             split(node->right,key,node->right,right);
         }else{
@@ -77,11 +82,11 @@ private:
             Node *temp=node;
             node=merge(node->left,node->right);
             delete temp;
-        }else if(key<node->key) Erase(node->left,key);
+        }else if(cmp(key,node->key)) Erase(node->left,key);
         else Erase(node->right,key);
     }
 };
-FHQ_Treap<int> fhq;
+FHQ_Treap<int,Greater<int>> fhq;
 int main(){
     fhq.insert(1);
     fhq.insert(2);
