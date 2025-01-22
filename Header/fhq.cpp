@@ -1,3 +1,4 @@
+//no finish
 #include<iostream>
 #ifndef	_TIME_H
 #include<time.h>
@@ -13,6 +14,7 @@ public:
     Compare cmp;
     struct Node{
         int pri;
+        size_t size;
         T key;
         Node* left, *right;
     }*nil,*root;
@@ -22,13 +24,14 @@ public:
         nil->key=T();
         nil->left=nil->right=nil;
         nil->pri=0;
+        nil->size=0;
         root=nil;
     }
     Node* newnode(const T &key){
         Node* node=new Node();
-        node->key=key;
         node->left=nil;
         node->right=nil;
+        node->key=key;
         node->pri=rand_seed();
         return node;
     }
@@ -37,9 +40,11 @@ public:
         if(right==nil) return left;
         if(left->pri>right->pri){
             left->right=merge(left->right,right);
+            update(left);
             return left;
         }else{
             right->left=merge(left,right->left);
+            update(right);
             return right;
         }
     }
@@ -55,6 +60,7 @@ public:
             right=node;
             split(node->left,key,left,node->left);
         }
+        update(node);
     }
     Node *insert(const T &key){
         Node *left,*right,*p;
@@ -71,13 +77,28 @@ public:
         }
     }
     void erase(const T &key){
+        if(find(root,key)==nil) return;
         Erase(root,key);
+    }
+    Node *find(Node* node,const T &key){
+        if(node==nil) return nil;
+        if(key==node->key) return node;
+        if(cmp(key,node->key)) return find(node->left,key);
+        else return find(node->right,key);
+    }
+    Node *kth(Node* node,size_t k){
+        if(k==node->left->size+1) return node;
+
     }
 private:
     int seed;
     int rand_seed(){return seed=seed*1103515245+12345;}
+    void update(Node* node){
+        node->size=1+node->left->size+node->right->size;
+    }
     void Erase(Node*& node,const T &key){
         if(node==nil) return;
+        --node->size;
         if(key==node->key){
             Node *temp=node;
             node=merge(node->left,node->right);
