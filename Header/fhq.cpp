@@ -5,13 +5,6 @@
 using namespace std;
 template<typename T>
 class FHQ_Treap{
-private:
-    int seed;
-    int rand_seed(){return seed=seed*1103515245+12345;}
-    void Earse(Node* node,T key){
-        if(node==nil) return;
-        if()
-    }
 public:
     struct Node{
         int pri;
@@ -26,7 +19,7 @@ public:
         nil->pri=0;
         root=nil;
     }
-    Node* newnode(T key){
+    Node* newnode(const T &key){
         Node* node=new Node();
         node->key=key;
         node->left=nil;
@@ -45,7 +38,7 @@ public:
             return right;
         }
     }
-    void split(Node* node,T key,Node*& left,Node*& right){
+    void split(Node* node,const T &key,Node*& left,Node*& right){
         if(node==nil){
             left=right=nil;
             return;
@@ -58,7 +51,7 @@ public:
             split(node->left,key,left,node->left);
         }
     }
-    Node *insert(T key){
+    Node *insert(const T &key){
         Node *left,*right,*p;
         split(root,key,left,right);
         p=newnode(key);
@@ -72,17 +65,37 @@ public:
             inorder(node->right);
         }
     }
-    void erase(T key){
-        
+    void erase(const T &key){
+        Erase(root,key);
+    }
+private:
+    int seed;
+    int rand_seed(){return seed=seed*1103515245+12345;}
+    void Erase(Node*& node,const T &key){
+        if(node==nil) return;
+        if(key==node->key){
+            Node *temp=node;
+            node=merge(node->left,node->right);
+            delete temp;
+        }else if(key<node->key) Erase(node->left,key);
+        else Erase(node->right,key);
     }
 };
 FHQ_Treap<int> fhq;
 int main(){
-    clock_t start,end;
-    start=clock();
-    for(int i=1;i<=1000000;i++) fhq.insert(i);
-    end=clock();
-    cout<<"Time used: "<<(double)(end-start)/CLOCKS_PER_SEC*1000<<"ms"<<endl;
+    fhq.insert(1);
+    fhq.insert(2);
+    fhq.insert(3);
+    fhq.insert(4);
+    fhq.insert(5);
+    fhq.insert(6);
+    fhq.insert(7);
+    fhq.insert(8);
+    fhq.insert(9);
+    fhq.insert(10);
     fhq.inorder(fhq.root);
-    // for(int i=1;i<=1000000;i++) fhq.insert(i);
+    cout<<endl;
+    fhq.erase(5);
+    fhq.inorder(fhq.root);
+    // cout<<endl;
 }
