@@ -8,7 +8,7 @@ class SBT{
 public:
     struct Node{
         Type key;
-        Node* left,*right;
+        Node *left,*right,*father;
         size_t size;
     }*nil,*root;
     SBT(){
